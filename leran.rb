@@ -17,9 +17,8 @@ $fileTypes = Hash[
 		'Others'	=> 
 	%w(.TXT .RAR .ZIP .TAR .TAR.GZ .TAR.BZ2 .EXE .TORRENT)
 ]
-
-$qtMoveds = 0;
 $types = $fileTypes.keys
+
 class Leran
 	# Firts step: Gets the 'from'/'to' folders
 	def initiliaze
