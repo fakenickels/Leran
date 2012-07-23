@@ -20,50 +20,56 @@ $fileTypes = Hash[
 
 $qtMoveds = 0;
 $types = $fileTypes.keys
-# Firts step: Gets the 'from'/'to' folders
-def init
-	puts "Put the work directory"
-	fromDir = gets.chop
+class Leran
+	# Firts step: Gets the 'from'/'to' folders
+	def initiliaze
+		@qtMoveds = 0
+		puts "Put the work directory"
+		fromDir = gets.chop
 
-	puts "Put the local where the files will be storeds" 
-	toDir = gets.chop
-	toDir = fromDir if toDir == "."
+		puts "Put the local where the files will be storeds" 
+		toDir = gets.chop
+		toDir = fromDir if toDir == "."
 
-	puts "Deep scan (inclue subfolders)? (y/n)"
-	isDeep = gets.chop;
+		puts "Deep scan (inclue subfolders)? (y/n)"
+		isDeep = gets.chop;
 
-	puts "_" * 50 
-	puts "Entering the store directory and creating folders"
-	scanFolder fromDir,toDir,isDeep
-end
-# Finds folders and files
-def scanFolder( from,to,deep )
-	Dir.foreach( from ) { |file|
-		if !File.directory? "#{from}/#{file}" 
-			ext = File.extname( file ).upcase
-			moveFile from,to,file,ext if ext != ""
-		elsif deep == 'y' && file != '.' && file != '..'
-			scanFolder "#{from}/#{file}",to,'y'  if !($types.include? file)
-		end		
-	} 
-end
-# def moveFile do... duhhhhh
-def moveFile( from,to,file,ext )
-	$fileTypes.each_key { | type |
-		if $fileTypes[type].include? ext
-			puts "Moving: #{file.slice(0,20)}... | Type: #{type}"
-			# The folder for type 
-			Dir.mkdir "#{to}/#{type}",0000 if !File::exists? "#{to}/#{type}"
-			# The folder for extension
-			Dir.mkdir "#{to}/#{type}/#{ext}",0000 if !File::exists? "#{to}/#{type}/#{ext}"
-			# Moves the files
-			FileUtils.mv "#{from}/#{file}", "#{to}/#{type}/#{ext}"
-			$qtMoveds += 1
-		end			
-	}
+		puts "_" * 50 
+		puts "Entering the store directory and creating folders"
+		scanFolder fromDir,toDir,isDeep
+	end
+	# Finds folders and files
+	def scanFolder( from,to,deep )
+		Dir.foreach( from ) { |file|
+			if !File.directory? "#{from}/#{file}" 
+				ext = File.extname( file ).upcase
+				moveFile from,to,file,ext if ext != ""
+			elsif deep == 'y' && file != '.' && file != '..'
+				scanFolder "#{from}/#{file}",to,'y'  if !($types.include? file)
+			end		
+		} 
+	end
+	# def moveFile do... duhhhhh
+	def moveFile( from,to,file,ext )
+		$fileTypes.each_key { | type |
+			if $fileTypes[type].include? ext
+				puts "Moving: #{file.slice(0,20)}... | Type: #{type}"
+				# The folder for type 
+				Dir.mkdir "#{to}/#{type}",0000 if !File::exists? "#{to}/#{type}"
+				# The folder for extension
+				Dir.mkdir "#{to}/#{type}/#{ext}",0000 if !File::exists? "#{to}/#{type}/#{ext}"
+				# Moves the files
+				FileUtils.mv "#{from}/#{file}", "#{to}/#{type}/#{ext}"
+				@qtMoveds += 1
+			end			
+		}
+	end
+	def totalMoveds
+		@qtMoveds
+	end
 end
 # Initialize it!
-init()
+goNow = Leran.new
 
-puts "Organized files counter: #{$qtMoveds}"
+puts "Organized files counter: #{goNow.totalMoveds}"
 puts "Finished! \n -Script by Bill Hotter"						
