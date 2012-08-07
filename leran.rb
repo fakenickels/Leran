@@ -24,7 +24,7 @@ class Leran
 	# Firt step: Get the 'from'/'to' folders
 	def initialize( fromDir, toDir, isDeep )
 		@qtMoveds = 0
-		toDir = fromDir if toDir == "."
+		toDir = fromDir if toDir == "-e"
 		if fromDir == "help"
 			puts "#" * 20
 			puts "Use demonstration: leran.rb fromDir toDir [isDeep]"
@@ -42,11 +42,10 @@ class Leran
 	# Find folders and files
 	def scanFolder( from,to,deep )
 		Dir.foreach( from ) do |file|
-			next if file =~ /\.{1,2}/ # ignore dirs '.' and '..'
 			if !File.directory? "#{from}/#{file}" 
 				ext = File.extname( file ).upcase
 				moveFile from,to,file,ext if ext != ""
-			elsif deep == '-y'
+			elsif deep == '-y' || !file =~ /^\.{1,2}/ # ignore dirs '.' and '..'
 				scanFolder "#{from}/#{file}",to,'-y'  if !($types.include? file)
 			end		
 		end
