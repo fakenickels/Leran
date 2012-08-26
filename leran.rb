@@ -18,7 +18,7 @@ class Leran
 			'Others'	=> 
 		%w(.TXT .RAR .ZIP .TAR .TAR.GZ .TAR.BZ2 .EXE .TORRENT)
 	}
-
+	
 	@@types = @@fileTypes.keys
 	# Firt step: Get the 'from'/'to' folders
 	# def scanFolder: Find folders and files
@@ -52,8 +52,8 @@ class Leran
 				# Second: Create the folder for extension
 				# Three: Move the files				
 				
-				Dir.mkdir "#{to}/#{type}",755 if !File::exists? "#{to}/#{type}"
-				Dir.mkdir "#{to}/#{type}/#{ext}",755 if !File::exists? "#{to}/#{type}/#{ext}"
+				Dir.mkdir "#{to}/#{type}",0755 if !File::exists? "#{to}/#{type}"
+				Dir.mkdir "#{to}/#{type}/#{ext}",0755 if !File::exists? "#{to}/#{type}/#{ext}"
 				FileUtils.mv "#{from}/#{file}", "#{to}/#{type}/#{ext}"
 				@qtMoveds += 1
 			end			
