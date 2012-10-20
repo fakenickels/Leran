@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Bill Hotter/I goes/go to learn!
+# By Gabriel Rubens <@grsabreu>
 require "fileutils"
 class Leran
 	@@fileTypes = {
@@ -81,7 +81,7 @@ else
 	goNow = Leran.new ARGV[0],ARGV[1],ARGV[2]
 	
 	puts "Organized files counter: #{goNow.totalMoveds}
-		Finished! \n -Script by Bill Hotter
+		Finished! \n -Script by Gabriel Rubens <gabrielrubensjs.blogspot.com>
 		Press Enter to close..."
 	STDIN.readline
 end					
