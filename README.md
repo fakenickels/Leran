@@ -1,10 +1,13 @@
 Leran
 =====
 
-### A Ruby file organizator
+### A simple File Organizer in Ruby
 
-Try in your terminal "leran.rb help" for details
+Install it in this way:
 
-If you are a Linux user, at the first use run this command on terminal
+gem install leran
 
-chmod +x leran
+Try in your terminal "leran help" for details
+
+use e.g.
+leran /home/gabriel/toOrganizeLaterImLazyNow /home/gabriel/my_organized_files
