@@ -1,22 +1,22 @@
 #!/usr/bin/env ruby
-# Bill Hotter/I goes/go to learn!
 require 'fileutils'
 
 class Leran
 	@@fileTypes = {
-			'Video': 
+	
+			'Video' =>
 		%w(.AVI .MKV .MP4 .MPEG .MPG .VOB .RMVB .WMV .FLV .MOV),
 
-			'Music':
+			'Music' =>
 		%w(.MP3 .AMR .WAV .WMA .ACC .OGG),
 
-			'Img':
+			'Img' =>
 		%w(.JPG .JPEG .BMP .PNG .GIF .ICO .PSD .XCF),
 
-			'Docs':
+			'Docs' =>
 		%w(.ODT .DOC .DOCX .XLS .XLSX .PPSX .PPS .PDF),
 
-			'Others':
+			'Others' =>
 		%w(.TXT .RAR .ZIP .TAR .EXE .TORRENT)
 		
 	}
@@ -43,7 +43,7 @@ class Leran
 				ext = File.extname( file ).upcase
 				
 				moveFile from,to,file,ext if ext != ""
-			elsif deep == '-d' || !file =~ /^\.{1,2}/ # ignore dirs '.' and '..'
+			elsif deep == '-d' && !file =~ /^\.{1,2}/ # ignore dirs '.' and '..'
 				scanFolder( "#{from}/#{file}", to, '-d' ) if !(@@types.include? file)
 			end		
 		end
@@ -57,36 +57,17 @@ class Leran
 				# First: Create the folder for type
 				# Second: Create the folder for extension			
 				
-				Dir.mkdir( "#{to}/#{type}", 0755 ) if !File::exists? "#{to}/#{type}"
-				Dir.mkdir( "#{to}/#{type}/#{ext}", 0755 ) if !File::exists? "#{to}/#{type}/#{ext}"
+				Dir.mkdir( "#{to}/#{type}", 0755 ) if !File.exists? "#{to}/#{type}"
+				Dir.mkdir( "#{to}/#{type}/#{ext}", 0755 ) if !File.exists? "#{to}/#{type}/#{ext}"
 				
 				FileUtils.mv "#{from}/#{file}", "#{to}/#{type}/#{ext}"
 				@qtMoveds += 1
 			end			
 		end
 	end
-	
+
 	def totalMoveds
 		@qtMoveds
 	end
 	
-end
-
-# Initialize it!
-
-if ARGV[0] == "help" || ARGV[0] == nil
-	puts "Use demonstration: 
-		leran.rb fromDir toDir [isDeep]
-		fromDir => the desorganized directory
-		toDir => the directory for to move the organized files
-		if toDir == -e he assumes the fromDir value
-		isDeep => find for archives in fromDir subfolders. For yes, use -d
-		Enjoy it!"
-else
-	goNow = Leran.new ARGV[0],ARGV[1],ARGV[2]
-	
-	puts "Organized files counter: #{goNow.totalMoveds}
-		Finished! \n -Script by Bill Hotter
-		Press Enter to close..."
-	STDIN.readline
-end					
+end				
