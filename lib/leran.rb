@@ -23,6 +23,10 @@ class Leran
 	
 	@@types = @@fileTypes.keys
 	
+	@@os = ''
+	
+	@@os = 'sudo' if RUBY_PLATFORM['linux']
+	
 	# Firt step: Get the 'from'/'to' folders
 	# def scanFolder: Find folders and files
 	# def moveFile: do... duhhhh
@@ -31,8 +35,9 @@ class Leran
 		@qtMoveds = 0
 		toDir = fromDir if toDir == '-e'
 		
-		puts '_' * 50 
+		puts '_' * 52 
 		puts 'Entering in the store directory and creating folders'
+		puts '_' * 52 
 		
 		scanFolder fromDir,toDir,isDeep
 	end
@@ -52,15 +57,16 @@ class Leran
 	def moveFile( from,to,file,ext )
 		@@fileTypes.each_key do | type |
 			if @@fileTypes[type].include? ext
-				puts "Moving: #{file.slice(0,20)}... | Type: #{type}" 
+				puts "\tMoving: #{file.slice(0,20)}... | Type: #{type}" 
 				
 				# First: Create the folder for type
 				# Second: Create the folder for extension			
-				
-				Dir.mkdir( "#{to}/#{type}", 0755 ) if !File.exists? "#{to}/#{type}"
-				Dir.mkdir( "#{to}/#{type}/#{ext}", 0755 ) if !File.exists? "#{to}/#{type}/#{ext}"
-				
-				FileUtils.mv "#{from}/#{file}", "#{to}/#{type}/#{ext}"
+
+				FileUtils::mkdir_p( "#{to}/#{type}" ) if !File.exists? "#{to}/#{type}"
+				FileUtils::mkdir_p( "#{to}/#{type}/F#{ext}" ) if !File.exists? "#{to}/#{type}/F#{ext}"
+
+				FileUtils::mv "#{from}/#{file}", "#{to}/#{type}/F#{ext}"
+
 				@qtMoveds += 1
 			end			
 		end
