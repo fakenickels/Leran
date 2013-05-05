@@ -8,11 +8,11 @@ Gem::Specification.new do |s|
 	s.authors = ['Gabriel Rubens']
 	s.email = 'grsabreu@gmail.com'
 
-	s.version = '0.0.1'
+	s.version = '0.0.3'
 	s.date = '2013-04-24'
 	s.executables << 'leran'
 	
 	s.files = ['lib/leran.rb', 'bin/leran']
-	s.homepage = 'http://rubygems.org/gems/leran'
+	s.homepage = 'https://github.com/grsabreu/Leran'
 	s.require_paths = ['lib']	
 end

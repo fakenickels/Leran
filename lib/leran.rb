@@ -23,10 +23,6 @@ class Leran
 	
 	@@types = @@fileTypes.keys
 	
-	@@os = ''
-	
-	@@os = 'sudo' if RUBY_PLATFORM['linux']
-	
 	# Firt step: Get the 'from'/'to' folders
 	# def scanFolder: Find folders and files
 	# def moveFile: do... duhhhh
@@ -39,12 +35,12 @@ class Leran
 		puts 'Entering in the store directory and creating folders'
 		puts '_' * 52 
 		
-		scanFolder fromDir,toDir,isDeep
+		scanFolder fromDir, toDir, isDeep	
 	end
 	
 	def scanFolder( from,to,deep )
 		Dir.foreach( from ) do |file|
-			if !File.directory? "#{from}/#{file}" 
+			if !File.directory? "#{from}/#{file}"
 				ext = File.extname( file ).upcase
 				
 				moveFile from,to,file,ext if ext != ""
